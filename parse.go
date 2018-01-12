@@ -8,8 +8,6 @@ import (
 	"strings"
 )
 
-
-
 type tl struct {
 	filename  string
 	cattype   string
@@ -53,22 +51,21 @@ func parsefile(filepath string) (lines []tl) {
 	return lines
 }
 
-
-func dirparse(searchDir string){
+func dirparse(searchDir string) {
 	fileList := []string{}
 	filepath.Walk(searchDir, func(path string, f os.FileInfo, err error) error {
 		fileList = append(fileList, path)
 		return nil
 	})
 	var lines []tl
-		pad := 0
+	pad := 0
 
 	for _, file := range fileList {
 		if strings.Contains(file, ".txt") {
-		for _, h := range parsefile(file) {
-			lines = append(lines, h)
+			for _, h := range parsefile(file) {
+				lines = append(lines, h)
+			}
 		}
-	}
 	}
 
 	for p, h := range lines {
@@ -92,13 +89,10 @@ func dirparse(searchDir string){
 	}
 
 	for _, u := range lines {
-		fmt.Println(u.filename+","+u.cattype+","+strings.Join(u.typeparse, ",")+","+"\""+u.tlstring+"\"")
+		fmt.Println(u.filename + "," + u.cattype + "," + strings.Join(u.typeparse, ",") + "," + "\"" + u.tlstring + "\"")
 	}
 
 }
-
-
-
 
 func main() {
 	if len(os.Args) > 1 {
